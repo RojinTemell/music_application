@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Future<void> LoginProcess() async {
       try {
+        // ignore: unused_local_variable
         UserCredential userCredential =
             await _auth.signInWithEmailAndPassword(
                 email: mailController.text, password: passwordController.text);

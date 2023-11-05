@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:music_app/features/components/custom_button_widget.dart';
@@ -31,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
     // ignore: non_constant_identifier_names
     Future<void> SignUpProcess() async {
       try {
+        // ignore: unused_local_variable
         UserCredential userCredential =
             await _auth.createUserWithEmailAndPassword(
                 email: mailController.text, password: passwordController.text);
