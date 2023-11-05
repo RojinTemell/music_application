@@ -1,9 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:music_app/features/views/signup_page.dart';
 import 'features/views/main_page.dart';
 
 
-void main() {
+void main() async {
+  
   runApp(const MyApp());
 }
 

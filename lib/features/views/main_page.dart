@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:music_app/features/constants/color_constants.dart';
 
 import '../components/custom_button_widget.dart';
 import '../methods/large_text_methods.dart';
 import '../mixins/navigator_manager.dart';
+import 'login_page.dart';
 import 'signup_page.dart';
 
 class MainPage extends StatelessWidget  with NavigatorManager {
@@ -27,7 +29,7 @@ class MainPage extends StatelessWidget  with NavigatorManager {
               width: 80,
               height: 80,
               // ignore: deprecated_member_use
-              color: Colors.white,
+              color: ColorsConstants.whitecolor,
             ),
             const TextLargeWidget(
               text: ' Rozify',
@@ -43,8 +45,8 @@ class MainPage extends StatelessWidget  with NavigatorManager {
         CustomBottonWidget(
           title: 'SİGN UP',
           width: size.width * 0.75,
-          color:const Color.fromARGB(255, 5, 68, 120), callback: (){
-            navigateToWidget(context,SignUpPage());
+          color:ColorsConstants.blueColor, callback: (){
+            navigateToWidget(context,const SignUpPage());
           },
         ),
         Padding(
@@ -52,7 +54,9 @@ class MainPage extends StatelessWidget  with NavigatorManager {
           child: CustomBottonWidget(
             title: 'LOG IN',
             width: size.width * 0.75,
-            color: const Color.fromARGB(255, 40, 39, 39), callback: () {  },
+            color: ColorsConstants.greyColor, callback: () { 
+              navigateToWidget(context,const LoginPage());
+             },
           ),
         )
       ],

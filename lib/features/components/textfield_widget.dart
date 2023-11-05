@@ -5,11 +5,11 @@ class TextFieldWidget extends StatelessWidget {
   TextFieldWidget({
     Key? key,
     required this.hintText,
-    required this.keyboardType,
+    required this.keyboardType, required this.controller,
   }) : super(key: key);
   final String hintText;
   final TextInputType keyboardType;
-  final controller = TextEditingController();
+  final TextEditingController controller ;
   FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class TextFieldWidget extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
+        textInputAction: TextInputAction.next,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Lütfen alanı doldurun';

@@ -5,18 +5,17 @@ import 'package:music_app/features/components/textfield_widget.dart';
 import 'package:music_app/features/constants/color_constants.dart';
 import 'package:music_app/features/methods/large_text_methods.dart';
 import 'package:music_app/features/mixins/navigator_manager.dart';
-import 'package:music_app/features/views/login_page.dart';
+import 'package:music_app/features/views/signup_page.dart';
 
-class SignUpPage extends StatelessWidget with NavigatorManager{
-  const SignUpPage({super.key});
- 
+class LoginPage extends StatelessWidget with NavigatorManager {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final GlobalKey<FormState>  _formKey =GlobalKey<FormState>();
-    final TextEditingController userNameController =TextEditingController();
-    final TextEditingController mailController =TextEditingController();
-    final TextEditingController passwordController =TextEditingController();
+    final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
+    TextEditingController mailController=TextEditingController();
+    TextEditingController passwordController=TextEditingController();
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -25,24 +24,20 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
             SizedBox(
               height: size.height * 0.3,
             ),
-           const Padding(
-              padding:  EdgeInsets.only(left: 50),
+            const Padding(
+              padding: EdgeInsets.only(left: 50),
               child: Align(
-                alignment: Alignment.centerLeft,
-                child:  TextLargeWidget(text: 'SIGN UP')),
+                  alignment: Alignment.centerLeft,
+                  child: TextLargeWidget(text: 'LOGIN')),
             ),
             const Padding(
-            padding:  EdgeInsets.only(left: 50),
+              padding: EdgeInsets.only(left: 50),
               child: Align(
-               alignment: Alignment.centerLeft,
-                child:  Text('Never Lost. Discover New Music.')),
+                  alignment: Alignment.centerLeft,
+                  child: Text('Never Lost. Discover New Music.')),
             ),
             SizedBox(
               height: size.height * 0.06,
-            ),
-             TextFieldWidget(
-              hintText: 'user name',
-              keyboardType: TextInputType.text, controller: userNameController,
             ),
             TextFieldWidget(
               hintText: 'email address',
@@ -58,9 +53,10 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CustomBottonWidget(
-                    title: 'CREATE ACCOUNT',
+                    title: 'LOGIN',
                     width: size.width * 0.5,
-                    color: ColorsConstants.blueColor, callback: () {  },
+                    color: ColorsConstants.blueColor,
+                    callback: () {},
                   ),
                   SvgPicture.asset(
                     'assets/spotify.svg',
@@ -71,7 +67,6 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
                   ),
                 ],
               ),
-              
             ),
             Padding(
               padding: const EdgeInsets.only(left: 50),
@@ -80,14 +75,14 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
                   const Text("Don't you have account?  "),
                   InkWell(
                       onTap: () {
-                        navigateToWidget(context,const LoginPage());
+                        navigateToWidget(context,const SignUpPage());
                       },
                       child: const Text(
-                        'Login',
+                        'Sign Up',
                         style: TextStyle(
                             color: ColorsConstants.blueColor,
                             fontWeight: FontWeight.w700,
-                            fontSize: 16),
+                            fontSize: 18),
                       ))
                 ],
               ),
