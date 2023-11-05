@@ -5,17 +5,19 @@ class TextFieldWidget extends StatelessWidget {
   TextFieldWidget({
     Key? key,
     required this.hintText,
-    required this.keyboardType, required this.controller,
+    required this.keyboardType, required this.controller, this.visiblePassword,
   }) : super(key: key);
   final String hintText;
   final TextInputType keyboardType;
   final TextEditingController controller ;
+  final bool? visiblePassword;
   FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 10),
       child: TextFormField(
+        obscureText: visiblePassword ?? false,
         controller: controller,
         keyboardType: keyboardType,
         textInputAction: TextInputAction.next,

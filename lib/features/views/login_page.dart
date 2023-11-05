@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:music_app/features/components/custom_button_widget.dart';
@@ -7,15 +8,35 @@ import 'package:music_app/features/methods/large_text_methods.dart';
 import 'package:music_app/features/mixins/navigator_manager.dart';
 import 'package:music_app/features/views/signup_page.dart';
 
-class LoginPage extends StatelessWidget with NavigatorManager {
+import 'main_page.dart';
+
+class LoginPage extends StatefulWidget with NavigatorManager {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
-    TextEditingController mailController=TextEditingController();
-    TextEditingController passwordController=TextEditingController();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    TextEditingController mailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    Future<void> LoginProcess() async {
+      try {
+        UserCredential userCredential =
+            await _auth.signInWithEmailAndPassword(
+                email: mailController.text, password: passwordController.text);
+        print('kullanıcı  giriş yaptı');
+      } catch (e) {
+        print(e);
+      }
+    }
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -41,11 +62,14 @@ class LoginPage extends StatelessWidget with NavigatorManager {
             ),
             TextFieldWidget(
               hintText: 'email address',
-              keyboardType: TextInputType.emailAddress, controller: mailController,
+              keyboardType: TextInputType.emailAddress,
+              controller: mailController,
             ),
             TextFieldWidget(
               hintText: ' password',
-              keyboardType: TextInputType.visiblePassword, controller: passwordController,
+              visiblePassword: true,
+              keyboardType: TextInputType.visiblePassword,
+              controller: passwordController,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 50),
@@ -56,7 +80,12 @@ class LoginPage extends StatelessWidget with NavigatorManager {
                     title: 'LOGIN',
                     width: size.width * 0.5,
                     color: ColorsConstants.blueColor,
-                    callback: () {},
+                    callback: () {
+                      if (_formKey.currentState!.validate()) {
+                          LoginProcess();
+                          widget.navigateToWidget(context,MainPage() );
+                        }
+                    },
                   ),
                   SvgPicture.asset(
                     'assets/spotify.svg',
@@ -75,7 +104,7 @@ class LoginPage extends StatelessWidget with NavigatorManager {
                   const Text("Don't you have account?  "),
                   InkWell(
                       onTap: () {
-                        navigateToWidget(context,const SignUpPage());
+                        widget.navigateToWidget(context,SignUpPage() );
                       },
                       child: const Text(
                         'Sign Up',

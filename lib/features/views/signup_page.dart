@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:music_app/features/components/custom_button_widget.dart';
@@ -7,16 +9,37 @@ import 'package:music_app/features/methods/large_text_methods.dart';
 import 'package:music_app/features/mixins/navigator_manager.dart';
 import 'package:music_app/features/views/login_page.dart';
 
-class SignUpPage extends StatelessWidget with NavigatorManager{
+import 'main_page.dart';
+
+class SignUpPage extends StatefulWidget with NavigatorManager {
   const SignUpPage({super.key});
- 
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final GlobalKey<FormState>  _formKey =GlobalKey<FormState>();
-    final TextEditingController userNameController =TextEditingController();
-    final TextEditingController mailController =TextEditingController();
-    final TextEditingController passwordController =TextEditingController();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final TextEditingController userNameController = TextEditingController();
+    final TextEditingController mailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    // ignore: non_constant_identifier_names
+    Future<void> SignUpProcess() async {
+      try {
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
+                email: mailController.text, password: passwordController.text);
+        print('kullanıcı kayıt oldu');
+      } catch (e) {
+        print(e);
+      }
+    }
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -25,32 +48,36 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
             SizedBox(
               height: size.height * 0.3,
             ),
-           const Padding(
-              padding:  EdgeInsets.only(left: 50),
+            const Padding(
+              padding: EdgeInsets.only(left: 50),
               child: Align(
-                alignment: Alignment.centerLeft,
-                child:  TextLargeWidget(text: 'SIGN UP')),
+                  alignment: Alignment.centerLeft,
+                  child: TextLargeWidget(text: 'SIGN UP')),
             ),
             const Padding(
-            padding:  EdgeInsets.only(left: 50),
+              padding: EdgeInsets.only(left: 50),
               child: Align(
-               alignment: Alignment.centerLeft,
-                child:  Text('Never Lost. Discover New Music.')),
+                  alignment: Alignment.centerLeft,
+                  child: Text('Never Lost. Discover New Music.')),
             ),
             SizedBox(
               height: size.height * 0.06,
             ),
-             TextFieldWidget(
+            TextFieldWidget(
               hintText: 'user name',
-              keyboardType: TextInputType.text, controller: userNameController,
+              keyboardType: TextInputType.text,
+              controller: userNameController,
             ),
             TextFieldWidget(
               hintText: 'email address',
-              keyboardType: TextInputType.emailAddress, controller: mailController,
+              keyboardType: TextInputType.emailAddress,
+              controller: mailController,
             ),
             TextFieldWidget(
               hintText: ' password',
-              keyboardType: TextInputType.visiblePassword, controller: passwordController,
+              visiblePassword: true,
+              keyboardType: TextInputType.visiblePassword,
+              controller: passwordController,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 50),
@@ -60,7 +87,13 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
                   CustomBottonWidget(
                     title: 'CREATE ACCOUNT',
                     width: size.width * 0.5,
-                    color: ColorsConstants.blueColor, callback: () {  },
+                    color: ColorsConstants.blueColor,
+                    callback: () async {
+                      if (_formKey.currentState!.validate()) {
+                        SignUpProcess();
+                        widget.navigateToWidget(context,MainPage() );
+                      }
+                    },
                   ),
                   SvgPicture.asset(
                     'assets/spotify.svg',
@@ -71,7 +104,6 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
                   ),
                 ],
               ),
-              
             ),
             Padding(
               padding: const EdgeInsets.only(left: 50),
@@ -80,7 +112,7 @@ class SignUpPage extends StatelessWidget with NavigatorManager{
                   const Text("Don't you have account?  "),
                   InkWell(
                       onTap: () {
-                        navigateToWidget(context,const LoginPage());
+                         widget.navigateToWidget(context,const LoginPage());
                       },
                       child: const Text(
                         'Login',
