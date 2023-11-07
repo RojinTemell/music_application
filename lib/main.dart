@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/views/main_page.dart';
+import 'exam.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark(
           useMaterial3: true,
         ),
-        home: const MainPage());
+        home: const Exam());
   }
 }
